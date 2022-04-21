@@ -1,5 +1,6 @@
 package com.tms.dagger2testan12.domain.di
 
+import com.tms.dagger2testan12.data.IntStorage
 import com.tms.dagger2testan12.data.MainRepositoryImpl
 import com.tms.dagger2testan12.data.StringStorage
 import com.tms.dagger2testan12.domain.MainInteractor
@@ -13,9 +14,10 @@ class DomainModule {
 
     @Provides
     fun provideMainRepository(
-        stringStorage: StringStorage
+        stringStorage: StringStorage,
+        intStorage: IntStorage
     ): MainRepository {
-        return MainRepositoryImpl(stringStorage)
+        return MainRepositoryImpl(stringStorage, intStorage)
     }
 
     @Provides

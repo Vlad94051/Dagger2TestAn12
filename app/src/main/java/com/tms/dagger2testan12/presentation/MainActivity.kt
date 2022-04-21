@@ -2,6 +2,7 @@ package com.tms.dagger2testan12.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
@@ -14,6 +15,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModel: MainViewModel
 
+    private val hwView by lazy { findViewById<TextView>(R.id.hw) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,16 +28,15 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         initObservers()
+
+        findViewById<Button>(R.id.btn).setOnClickListener {
+            viewModel.onButtonClicked()
+        }
     }
 
     private fun initObservers() {
-        viewModel.numbers.observe(this) { numbers ->
-            Toast.makeText(this, numbers.toString(), Toast.LENGTH_LONG).show()
-            Snackbar.make(
-                findViewById<TextView>(R.id.hw),
-                viewModel.getString(),
-                Snackbar.LENGTH_LONG
-            ).show()
+        viewModel.numbers.observe(this) { strings ->
+            hwView.text = strings.toString()
         }
     }
 }
